@@ -1,5 +1,7 @@
 package iqmetrix.takehomechallenge.mik.entity;
 
+import java.util.HashMap;
+
 /**
  * Created by MIK on 2017-10-12.
  * Possible card ranks
@@ -24,6 +26,7 @@ public enum Rank {
      * The value of card
      */
     public final int value;
+    private static HashMap<Integer, Rank> map = new HashMap<>();
 
     //Public methods
     /**
@@ -34,6 +37,15 @@ public enum Rank {
         this.value = value;
     }
 
+    static {
+        for (Rank rank : Rank.values()) {
+            map.put(rank.value, rank);
+        }
+    }
+
+    public static Rank valueOf(int rank) {
+        return map.get(rank);
+    }
 
     /**
      * Get whether given Ranks are consecutive in the given order or not

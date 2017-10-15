@@ -2,6 +2,7 @@ package iqmetrix.takehomechallenge.mik.entity;
 
 /**
  * Created by MIK on 2017-10-12.
+ * The card class
  */
 public class Card {
     //Properties
