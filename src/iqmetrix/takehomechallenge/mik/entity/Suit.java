@@ -7,10 +7,10 @@ import java.util.HashMap;
  * Possible suits of cards
  */
 public enum Suit {
-    CLUBS(1),
-    DIAMONDS(2),
-    HEARTS(3),
-    SPADES(4);
+    C(1),
+    D(2),
+    H(3),
+    S(4);
 
     public final int suit;
     private static HashMap<Integer, Suit> hMap = new HashMap<>();

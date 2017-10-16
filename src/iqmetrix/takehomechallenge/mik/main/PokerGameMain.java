@@ -21,7 +21,7 @@ public class PokerGameMain {
 //        logger.fatal("Sample fatal message");
 
         Game game = new Game();
-
+        game.startGame();
 
     }
 

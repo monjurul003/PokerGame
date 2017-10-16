@@ -10,21 +10,27 @@ public enum PokerHandsType {
     /**
      * Five cards of the same suit (if not consecutive).
      */
-    FLUSH("flush"),
+    FLUSH(40,"flush"),
 
     /**
      * Three cards of the same rank.
      */
-    THREEOFAKIND("three of a kind"),
+    THREEOFAKIND(30, "three of a kind"),
     /**
      * Two cards of the same rank.
      */
-    ONEPAIR("one pair"),
+    ONEPAIR(20, "one pair"),
 
     /**
      * Highest card value.
      */
-    HIGHCARD("high card");
+    HIGHCARD(10, "high card");
+    //Private properties
+    /**
+     * An arbitrary value used to compare hands, where higher values win.
+     */
+    public final int value;
+
     /**
      * The hand's display name.
      */
@@ -34,9 +40,11 @@ public enum PokerHandsType {
     //******************************
     /**
      * Construct an instance.
+     * @param value An arbitrary value used to compare hands, where higher values win.
      * @param name The hand's display name.
      */
-    PokerHandsType(String name) {
+    PokerHandsType(int value, String name) {
+        this.value = value;
         this.name = name;
     }
 }

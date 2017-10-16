@@ -47,7 +47,7 @@ public class PokerHandData {
 
         for (Card c:cards) {
             rankMap.put(c.rank, rankMap.containsKey(c.rank) ? rankMap.get(c.rank) + 1 : 1);
-            suitMap.put(c.suit, suitMap.containsKey(c.suit) ? rankMap.get(c.suit) + 1 : 1);
+            suitMap.put(c.suit, suitMap.containsKey(c.suit) ? suitMap.get(c.suit) + 1 : 1);
         }
 
         // save data
