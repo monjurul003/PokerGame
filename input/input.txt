@@ -1,0 +1,4 @@
+Joe, 10H, 9H, 6H, 5H, 4H
+Bob, 3S, 4S, 5S, KS, QS
+Sally, AC, 7S, 5C, 2S, 2C
+Dev, 10C, 9C, 8C, 7C, 6C

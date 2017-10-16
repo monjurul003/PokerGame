@@ -24,6 +24,7 @@ public class Game {
 
     /**
      * Read a file as a String array
+     *
      * @param fileNameWithPath is a string containing the file name and path
      */
     private String[] getFileAsStringArray(String fileNameWithPath) {
@@ -44,6 +45,7 @@ public class Game {
 
     /**
      * Get rank from input string with suit
+     *
      * @param s is String containing the rank with suit
      */
     private Rank getRank(String s) {
@@ -95,6 +97,7 @@ public class Game {
 
     /**
      * Find whether input contains duplicate card or player (catch ill formatted input)
+     *
      * @param inputArray is a string array of input
      */
     private boolean findDuplicateEntry(String[] inputArray) {
@@ -155,9 +158,9 @@ public class Game {
         logger.debug("File path and name-- " + fileNameWithPath);
         String[] inputStringArray = this.getFileAsStringArray(fileNameWithPath);
         //check maximum player in the game
-        if (inputStringArray.length > 10) {
-            System.out.println("Maximum 10 player can play the game at a time!");
-            logger.fatal("Application stopped as input contains more than 10 players information.");
+        if (inputStringArray.length > 10 || inputStringArray.length < 2 ) {
+            System.out.println("Two to ten players can play the game at a time! Quitting game...");
+            logger.fatal("Application stopped as input contains more than 10 players information or less than two players information.");
             System.exit(0);
         }
         //check duplicate card and player in input file
@@ -172,6 +175,7 @@ public class Game {
 
     /**
      * Break tie between two player using high card rule
+     *
      * @param firstPlayerIndex  index of player 1
      * @param secondPlayerIndex index of player 2
      */
@@ -179,12 +183,12 @@ public class Game {
         Card[] firstHand = this.playerList.get(firstPlayerIndex).hand.peek();
         Card[] secondHand = this.playerList.get(secondPlayerIndex).hand.peek();
         for (int i = 0; i < firstHand.length; i++) {
-            logger.info("compare between - "+ firstHand[i].rank.value+" and "+ secondHand[i].rank.value);
+            logger.info("compare between - " + firstHand[i].rank.value + " and " + secondHand[i].rank.value);
             if (firstHand[i].rank.value > secondHand[i].rank.value) {
-                logger.info("first hand have high rank "+ firstHand[i].rank.value);
+                logger.info("first hand have high rank " + firstHand[i].rank.value);
                 return firstPlayerIndex;
             } else if (firstHand[i].rank.value < secondHand[i].rank.value) {
-                logger.info("second hand have high rank "+ secondHand[i].rank.value);
+                logger.info("second hand have high rank " + secondHand[i].rank.value);
                 return secondPlayerIndex;
             } else {
                 logger.info("Both have same rank");
@@ -199,15 +203,22 @@ public class Game {
 
     private void findWinner() {
         ArrayList<String> tieList = new ArrayList<>();
+        HashSet<String> playerNameInTieList = new HashSet<>();
         int max = 0;
         for (int i = 1; i < this.playerList.size(); i++) {
-            logger.info("Compare between "+ this.playerList.get(max).name+" and "+ this.playerList.get(i).name);
+            logger.info("Compare between " + this.playerList.get(max).name + " and " + this.playerList.get(i).name);
             if (this.playerList.get(max).hand.getHandType().value < this.playerList.get(i).hand.getHandType().value) {
                 max = i;
             }
             if (this.playerList.get(max).hand.getHandType().value == this.playerList.get(i).hand.getHandType().value) {
-                tieList.add(this.playerList.get(max).name);
-                tieList.add(this.playerList.get(i).name);
+                if (playerNameInTieList.contains(this.playerList.get(max).name) == false) {
+                    tieList.add(this.playerList.get(max).name);
+                    playerNameInTieList.add(this.playerList.get(max).name);
+                }
+                if (playerNameInTieList.contains(this.playerList.get(i).name) == false) {
+                    tieList.add(this.playerList.get(i).name);
+                    playerNameInTieList.add(this.playerList.get(i).name);
+                }
                 max = this.breakTie(max, i);
             }
         }
