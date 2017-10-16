@@ -18,11 +18,13 @@ public class Card {
 
 
     //Public methods
+
     /**
      * Construct an instance.
+     *
      * @param suit The card suit
      * @param rank The card rank
-     * */
+     */
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;

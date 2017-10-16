@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 /**
  * Created by MIK on 2017-10-13.
- * Player'and of card
+ * Player's hand of card
  */
 public class PokerHands {
     //Private properties
@@ -39,19 +39,6 @@ public class PokerHands {
         return cardsInHand.toArray(new Card[0]);
     }
 
-    /**
-     * Get the total face value of the cards in the hand.
-     */
-    public int getTotalFaceValue() {
-        return this.getMetadata().totalValueInHand;
-    }
-
-    /**
-     * Remove all cards from the hand.
-     */
-    public void clear() {
-        this.cardsInHand.clear();
-    }
 
     /**
      * Get the type of the player's hand (e.g. royal flush).

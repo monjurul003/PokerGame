@@ -1,4 +1,7 @@
 package iqmetrix.takehomechallenge.mik.entity;
+
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.List;
  * Calculate metrics and data for a poker hand of cards
  */
 public class PokerHandData {
+    static final Logger logger = Logger.getLogger(PokerHandData.class);
     //Properties
     /**
      * The ranks in the hand.
@@ -29,14 +33,13 @@ public class PokerHandData {
      * The number of cards in each distinct rank.
      */
     public final int[] rankCounts;
-    /**
-     * The total value in one hand.
-     */
-    public final int totalValueInHand;
+
 
     // Public methods
+
     /**
      * Construct an instance.
+     *
      * @param cards The cards to analyse.
      */
     public PokerHandData(Card[] cards) {
@@ -44,8 +47,8 @@ public class PokerHandData {
         //get rank and suit information extracted
         HashMap<Rank, Integer> rankMap = new HashMap<>();
         HashMap<Suit, Integer> suitMap = new HashMap<>();
-
-        for (Card c:cards) {
+        logger.debug("Sorting cards in rank and suit.");
+        for (Card c : cards) {
             rankMap.put(c.rank, rankMap.containsKey(c.rank) ? rankMap.get(c.rank) + 1 : 1);
             suitMap.put(c.suit, suitMap.containsKey(c.suit) ? suitMap.get(c.suit) + 1 : 1);
         }
@@ -62,17 +65,10 @@ public class PokerHandData {
             this.suits = orderedSuits.toArray(new Suit[0]);
         }
 
-        // save metrics
+        // save total ranks and suit metrics
         this.totalRanksInHand = rankMap.size();
         this.totalSuitsInhand = suitMap.size();
 
-        // save total value
-        {
-            int totalValue = 0;
-            for (Card card : cards)
-                totalValue += card.rank.value;
-            this.totalValueInHand = totalValue;
-        }
 
         // save rank counts
         {
@@ -81,8 +77,9 @@ public class PokerHandData {
 
             int size = values.size();
             this.rankCounts = new int[size];
-            for(int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++) {
                 this.rankCounts[i] = values.get(i);
+            }
         }
 
     }

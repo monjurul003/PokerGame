@@ -22,17 +22,11 @@ public class Game {
 
     private ArrayList<Player> playerList;
 
-    public Game() {
-        this.playerList = new ArrayList<>();
-    }
-    //Public methods
-
     /**
-     * Get a String array from any file with name and path
-     *
-     * @param fileNameWithPath is String containing the file name and path
+     * Read a file as a String array
+     * @param fileNameWithPath is a string containing the file name and path
      */
-    public String[] getFileAsStringArray(String fileNameWithPath) {
+    private String[] getFileAsStringArray(String fileNameWithPath) {
         logger.debug("Reading file - " + fileNameWithPath);
         //read input from the input folder as string
         List<String> list = new ArrayList<>();
@@ -42,22 +36,19 @@ public class Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //convert ArrayList to a string array
         String[] inputString = list.toArray(new String[0]);
-
-        for (String str : inputString) {
-            System.out.println(str);
-        }
+        logger.debug("Reading file done. ");
         return inputString;
     }
 
     /**
      * Get rank from input string with suit
-     *
      * @param s is String containing the rank with suit
      */
     private Rank getRank(String s) {
         if (s == null || s.length() == 0) {
-            System.out.println("Input string is null!");
+            logger.debug("Input string is null! Rank can not be null.");
             System.exit(0);
         }
         char ch = s.charAt(0);
@@ -83,7 +74,7 @@ public class Game {
      */
     private Suit getSuit(String s) {
         if (s == null || s.length() == 0) {
-            System.out.println("Input string is null!");
+            logger.debug("Input string is null!");
             System.exit(0);
         }
         char ch = s.charAt(s.length() - 1);
@@ -103,8 +94,7 @@ public class Game {
     }
 
     /**
-     * Find whether input contains duplicate card or player or not (catch ill formated input
-     *
+     * Find whether input contains duplicate card or player (catch ill formatted input)
      * @param inputArray is a string array of input
      */
     private boolean findDuplicateEntry(String[] inputArray) {
@@ -125,7 +115,7 @@ public class Game {
     }
 
     /**
-     * Creat and populate player List
+     * Create and populate player List
      *
      * @param inputStringArray is the input file as string array
      */
@@ -133,6 +123,11 @@ public class Game {
     private void populatePlayers(String[] inputStringArray) {
         for (String inputString : inputStringArray) {
             String[] temp = inputString.split(",");
+            if (temp.length != 6) {
+                System.out.println("Player should have 5 card in his hand! Check log for details. Quitting game... ");
+                logger.fatal("Ill formatted input. Input string should contain player name and 5 cards. ");
+                System.exit(0);
+            }
             PokerHands hands = new PokerHands();
             for (int i = 1; i < temp.length; i++) {
                 Card card = new Card(this.getSuit(temp[i].replaceAll("[\\s]", "")), this.getRank(temp[i].replaceAll("[\\s]", "")));
@@ -143,12 +138,16 @@ public class Game {
             this.playerList.add(newPlayer);
             logger.info("Player " + temp[0] + " added ");
         }
+        logger.debug("Populating player done.");
 
     }
 
-
+    /**
+     * Initialize the game.
+     */
     //initialize game
     private void init() {
+        logger.debug("Initializing the game.");
         //get application directory
         String appDir = System.getProperty("user.dir");
         //File name and path in the input directory
@@ -163,60 +162,78 @@ public class Game {
         }
         //check duplicate card and player in input file
         if (findDuplicateEntry(inputStringArray)) {
-            System.out.println("Two player name can not be same or two player can not have same card!");
-            logger.fatal("Two player name can not be same or two player can not have same card!");
+            System.out.println("Two player name can not be same or two player can not have same card! Quitting game..");
+            logger.fatal("Input string contains duplicate entry or player name is same!");
             System.exit(0);
         }
         this.populatePlayers(inputStringArray);
-
-
+        logger.debug("Initialization done.");
     }
 
+    /**
+     * Break tie between two player using high card rule
+     * @param firstPlayerIndex  index of player 1
+     * @param secondPlayerIndex index of player 2
+     */
     private int breakTie(int firstPlayerIndex, int secondPlayerIndex) {
         Card[] firstHand = this.playerList.get(firstPlayerIndex).hand.peek();
         Card[] secondHand = this.playerList.get(secondPlayerIndex).hand.peek();
         for (int i = 0; i < firstHand.length; i++) {
+            logger.info("compare between - "+ firstHand[i].rank.value+" and "+ secondHand[i].rank.value);
             if (firstHand[i].rank.value > secondHand[i].rank.value) {
+                logger.info("first hand have high rank "+ firstHand[i].rank.value);
                 return firstPlayerIndex;
             } else if (firstHand[i].rank.value < secondHand[i].rank.value) {
+                logger.info("second hand have high rank "+ secondHand[i].rank.value);
                 return secondPlayerIndex;
             } else {
+                logger.info("Both have same rank");
             }
         }
         return -1;
     }
 
+    /**
+     * Find the winner
+     */
+
     private void findWinner() {
         ArrayList<String> tieList = new ArrayList<>();
         int max = 0;
         for (int i = 1; i < this.playerList.size(); i++) {
-
+            logger.info("Compare between "+ this.playerList.get(max).name+" and "+ this.playerList.get(i).name);
             if (this.playerList.get(max).hand.getHandType().value < this.playerList.get(i).hand.getHandType().value) {
                 max = i;
             }
             if (this.playerList.get(max).hand.getHandType().value == this.playerList.get(i).hand.getHandType().value) {
                 tieList.add(this.playerList.get(max).name);
                 tieList.add(this.playerList.get(i).name);
-                max = this.breakTie(max,i);
+                max = this.breakTie(max, i);
             }
         }
-        if (tieList.size()>1){
+        if (tieList.size() > 1) {
             System.out.print("There was a tie! Among ");
-            for (String str: tieList){
-                System.out.print(str+", ");
+            for (String str : tieList) {
+                System.out.print(str + ", ");
             }
             System.out.println("");
             System.out.print("But using tie breaking rule, ");
         }
-        System.out.println("The winner is "+this.playerList.get(max).name);
+        System.out.println("The winner is " + this.playerList.get(max).name);
     }
 
-    public void startGame() {
 
+    //Public methods
+    public Game() {
+        this.playerList = new ArrayList<>();
+    }
+
+    /**
+     * Start the game.
+     */
+    public void startGame() {
         this.init();
         this.findWinner();
-
-
     }
 
 }

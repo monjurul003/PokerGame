@@ -29,11 +29,13 @@ public enum Rank {
     private static HashMap<Integer, Rank> map = new HashMap<>();
 
     //Public methods
+
     /**
      * Construct an instance of a Rank
+     *
      * @param value The value of a card when choosing a high card.
      */
-    Rank(int value){
+    Rank(int value) {
         this.value = value;
     }
 
@@ -49,13 +51,14 @@ public enum Rank {
 
     /**
      * Get whether given Ranks are consecutive in the given order or not
+     *
      * @param ranks The ranks to check
      */
 
-    public static boolean areConsecutive(Rank[] ranks){
+    public static boolean areConsecutive(Rank[] ranks) {
 
-        for (int i = 0; i < ranks.length-1; i++) {
-            if (Math.abs(ranks[i].value - ranks[i+1].value) !=1){
+        for (int i = 0; i < ranks.length - 1; i++) {
+            if (Math.abs(ranks[i].value - ranks[i + 1].value) != 1) {
                 return false;
             }
         }
