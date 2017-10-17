@@ -182,6 +182,7 @@ public class Game {
     private int breakTie(int firstPlayerIndex, int secondPlayerIndex) {
         Card[] firstHand = this.playerList.get(firstPlayerIndex).hand.peek();
         Card[] secondHand = this.playerList.get(secondPlayerIndex).hand.peek();
+
         for (int i = 0; i < firstHand.length; i++) {
             logger.info("compare between - " + firstHand[i].rank.value + " and " + secondHand[i].rank.value);
             if (firstHand[i].rank.value > secondHand[i].rank.value) {
@@ -227,7 +228,7 @@ public class Game {
             System.out.print("There was a tie! Among ");
             for (int i = 0; i < tieList.size(); i++) {
                 System.out.print(tieList.get(i));
-                if (i<tieList.size()-1){
+                if (i < tieList.size() - 1) {
                     System.out.print(", ");
                 }
             }

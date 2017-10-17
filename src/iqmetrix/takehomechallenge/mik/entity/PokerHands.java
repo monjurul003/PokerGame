@@ -50,7 +50,6 @@ public class PokerHands {
         }
         // get data
         PokerHandData data = this.getMetadata();
-        HashSet<Rank> ranks = new HashSet<>(Arrays.asList(data.ranks));
 
         // get hand type
 
