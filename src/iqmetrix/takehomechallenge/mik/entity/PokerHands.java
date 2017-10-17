@@ -27,7 +27,7 @@ public class PokerHands {
      * @param card The card to add.
      */
     public void add(Card card) {
-        this.cardsInHand.add(new Card(card.suit, card.rank));
+        this.cardsInHand.add(card);
         this.sort();
         this.data = null;
     }

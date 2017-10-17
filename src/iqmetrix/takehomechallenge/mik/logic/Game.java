@@ -158,7 +158,7 @@ public class Game {
         logger.debug("File path and name-- " + fileNameWithPath);
         String[] inputStringArray = this.getFileAsStringArray(fileNameWithPath);
         //check maximum player in the game
-        if (inputStringArray.length > 10 || inputStringArray.length < 2 ) {
+        if (inputStringArray.length > 10 || inputStringArray.length < 2) {
             System.out.println("Two to ten players can play the game at a time! Quitting game...");
             logger.fatal("Application stopped as input contains more than 10 players information or less than two players information.");
             System.exit(0);
@@ -211,6 +211,7 @@ public class Game {
                 max = i;
             }
             if (this.playerList.get(max).hand.getHandType().value == this.playerList.get(i).hand.getHandType().value) {
+
                 if (playerNameInTieList.contains(this.playerList.get(max).name) == false) {
                     tieList.add(this.playerList.get(max).name);
                     playerNameInTieList.add(this.playerList.get(max).name);
@@ -224,8 +225,11 @@ public class Game {
         }
         if (tieList.size() > 1) {
             System.out.print("There was a tie! Among ");
-            for (String str : tieList) {
-                System.out.print(str + ", ");
+            for (int i = 0; i < tieList.size(); i++) {
+                System.out.print(tieList.get(i));
+                if (i<tieList.size()-1){
+                    System.out.print(", ");
+                }
             }
             System.out.println("");
             System.out.print("But using tie breaking rule, ");
