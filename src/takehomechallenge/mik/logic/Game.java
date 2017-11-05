@@ -1,7 +1,7 @@
-package iqmetrix.takehomechallenge.mik.logic;
+package takehomechallenge.mik.logic;
 
-import iqmetrix.takehomechallenge.mik.entity.*;
 import org.apache.log4j.Logger;
+import takehomechallenge.mik.entity.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -108,6 +108,7 @@ public class Game {
                 list.add(s);
             }
         }
+
         HashSet<String> hSet = new HashSet<>();
         for (String str : list) {
             if (hSet.add(str) == false) {

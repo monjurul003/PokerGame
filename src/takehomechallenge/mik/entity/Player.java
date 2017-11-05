@@ -1,4 +1,4 @@
-package iqmetrix.takehomechallenge.mik.entity;
+package takehomechallenge.mik.entity;
 
 /**
  * Created by MIK on 2017-10-13.

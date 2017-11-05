@@ -1,8 +1,6 @@
-package iqmetrix.takehomechallenge.mik.entity;
+package takehomechallenge.mik.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 
 /**
  * Created by MIK on 2017-10-13.

@@ -1,4 +1,4 @@
-package iqmetrix.takehomechallenge.mik.entity;
+package takehomechallenge.mik.entity;
 
 import java.util.HashMap;
 
@@ -20,7 +20,7 @@ public enum Suit {
      * Cosruct an instance of Suit
      * @param suit The card suit
      */
-    private Suit(int suit) {
+    Suit(int suit) {
         this.suit = suit;
     }
 

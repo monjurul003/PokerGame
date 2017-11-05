@@ -1,4 +1,4 @@
-package iqmetrix.takehomechallenge.mik.entity;
+package takehomechallenge.mik.entity;
 
 import java.util.HashMap;
 

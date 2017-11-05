@@ -1,4 +1,4 @@
-package iqmetrix.takehomechallenge.mik.entity;
+package takehomechallenge.mik.entity;
 
 import org.apache.log4j.Logger;
 

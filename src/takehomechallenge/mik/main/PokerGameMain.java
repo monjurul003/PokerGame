@@ -1,8 +1,8 @@
-package iqmetrix.takehomechallenge.mik.main;
+package takehomechallenge.mik.main;
 
-import iqmetrix.takehomechallenge.mik.logic.Game;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import takehomechallenge.mik.logic.Game;
 
 /**
  * Created by MIK on 2017-10-14.
